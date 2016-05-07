@@ -3,8 +3,10 @@ package com.grafixartist.marshmallowsample;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,14 +22,20 @@ import com.google.android.gms.fitness.data.Device;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.grafixartist.marshmallowsample.model.DeviceLocation;
 import com.grafixartist.marshmallowsample.util.RestClient;
 
 import java.text.DateFormat;
 import java.util.Date;
 
-public class LocationGoogle extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class LocationGoogle extends FragmentActivity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
 
     protected static final String TAG = "location-updates-sample";
 
@@ -112,6 +120,13 @@ public class LocationGoogle extends AppCompatActivity implements
         // Kick off the process of building a GoogleApiClient and requesting the LocationServices
         // API.
         buildGoogleApiClient();
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     /**
@@ -254,10 +269,15 @@ public class LocationGoogle extends AppCompatActivity implements
                     mLastUpdateTime));
 
             DeviceLocation location = new DeviceLocation();
-            location.setDevice("Mylapore");
+            location.setDevice("Mylapore vehicle");
             location.setLongitude(mCurrentLocation.getLongitude());
             location.setLatitude(mCurrentLocation.getLatitude());
             new RestClient(location).execute();
+
+            LatLng sydney = new LatLng(location.getLatitude(),location.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(sydney).title(location.getDevice()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            mMap.animateCamera( CameraUpdateFactory.zoomTo(14.0f ) );
         }
     }
 
@@ -387,5 +407,16 @@ public class LocationGoogle extends AppCompatActivity implements
         savedInstanceState.putParcelable(LOCATION_KEY, mCurrentLocation);
         savedInstanceState.putString(LAST_UPDATED_TIME_STRING_KEY, mLastUpdateTime);
         super.onSaveInstanceState(savedInstanceState);
+    }
+    private GoogleMap mMap;
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(12.942134,80.215009);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.animateCamera( CameraUpdateFactory.zoomTo(14.0f ) );
     }
 }
