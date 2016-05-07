@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "589052785147",
+    "project_id": "runtime-permission-sample"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589052785147:android:b7ffd25ddd9f0bbc",
+        "android_client_info": {
+          "package_name": "com.grafixartist.marshmallowsample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589052785147-mlp2po539gqcm282r64p3fitc2f26pb1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grafixartist.marshmallowsample",
+            "certificate_hash": "075D53091FF0999D5DC3F001CCB147C75DCECD16"
+          }
+        },
+        {
+          "client_id": "589052785147-4nqgdnerrjblfkgf9gfab2vflvldl3pf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNC9DERTN3iBFtQYYhUYG-SVqgrOss1IM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
