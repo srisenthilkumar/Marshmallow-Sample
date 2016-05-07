@@ -16,9 +16,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.fitness.data.Device;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.grafixartist.marshmallowsample.model.DeviceLocation;
+import com.grafixartist.marshmallowsample.util.RestClient;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -249,7 +252,14 @@ public class LocationGoogle extends AppCompatActivity implements
                     mCurrentLocation.getLongitude()));
             mLastUpdateTimeTextView.setText(String.format("%s: %s", mLastUpdateTimeLabel,
                     mLastUpdateTime));
-        }    }
+
+            DeviceLocation location = new DeviceLocation();
+            location.setDevice("Mylapore");
+            location.setLongitude(mCurrentLocation.getLongitude());
+            location.setLatitude(mCurrentLocation.getLatitude());
+            new RestClient(location).execute();
+        }
+    }
 
     /**
      * Removes location updates from the FusedLocationApi.

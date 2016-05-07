@@ -45,6 +45,7 @@ public class LocationPermissionActivity extends AppCompatActivity implements OnP
     final String PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION;
 
     PermissionHelper permissionHelper;
+    //PermissionHelper networkHelper;
     Toolbar toolbar;
     TextView status;
     LocationRequest mLocationRequest;
@@ -87,11 +88,13 @@ public class LocationPermissionActivity extends AppCompatActivity implements OnP
 
         status = (TextView) findViewById(R.id.status);
         permissionHelper = PermissionHelper.getInstance(this);
+        //networkHelper = PermissionHelper.getInstance(this);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                permissionHelper.setForceAccepting(false).request(PERMISSION);
+                permissionHelper.setForceAccepting(false).request(PERMISSION).request(Manifest.permission.INTERNET).request(Manifest.permission.ACCESS_NETWORK_STATE);
+                //networkHelper.setForceAccepting(false)
            
             }
         });
@@ -117,7 +120,7 @@ public class LocationPermissionActivity extends AppCompatActivity implements OnP
                 + "\nGrand Results: " + grantResults);
 
         permissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
+//        networkHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -125,6 +128,7 @@ public class LocationPermissionActivity extends AppCompatActivity implements OnP
         status.setText("onActivityResult()");
 
         permissionHelper.onActivityForResult(requestCode);
+  //      networkHelper.onActivityForResult(requestCode);
     }
 
     @Override
@@ -189,8 +193,8 @@ public class LocationPermissionActivity extends AppCompatActivity implements OnP
                 .setPositiveButton("Request", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        permissionHelper.requestAfterExplanation(permission);
+                        String[] permissions = {permission,Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE};
+                        permissionHelper.requestAfterExplanation(permissions);
 
                     }
                 })

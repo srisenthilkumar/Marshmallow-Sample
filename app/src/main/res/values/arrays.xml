@@ -3,8 +3,7 @@
 
     <string-array name="titles">
 
-        <item>Chrome Custom Tabs</item>
-        <item>Run-time Permissions</item>
+        <item>Configuration</item>
         <item>Run-time Permissions Location</item>
         <item>Location Google</item>
     </string-array>

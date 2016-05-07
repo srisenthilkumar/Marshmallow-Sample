@@ -55,14 +55,10 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(i);
                                 break;
                             case 1:
-                                i = new Intent(MainActivity.this, PermissionActivity.class);
-                                startActivity(i);
-                                break;
-                            case 2:
                                 i = new Intent(MainActivity.this, LocationPermissionActivity.class);
                                 startActivity(i);
                                 break;
-                            case 3:
+                            case 2:
                                 i = new Intent(MainActivity.this, LocationGoogle.class);
                                 startActivity(i);
                                 break;
